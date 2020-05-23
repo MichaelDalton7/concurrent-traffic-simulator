@@ -14,8 +14,8 @@ T MessageQueue<T>::receive() {
     _condition.wait(lock, [this] { return !_queue.empty(); }); // pass unique lock to condition variable
 
     // remove first vector element from queue
-    T message = std::move(_queue.front());
-    _queue.pop_front();
+    T message = std::move(_queue.back());
+    _queue.pop_back();
 
     return message; 
 }
@@ -78,8 +78,8 @@ void TrafficLight::cycleThroughPhases() {
     std::random_device rd;
     std::mt19937 eng(rd());
     // Range between 4 and 6 seconds
-    std::uniform_int_distribution<> cycleDuractionRange(4000, 6000);
-    double cycleDuration = cycleDuractionRange(eng); // duration of a single simulation cycle in ms
+    std::uniform_int_distribution<int> cycleDuractionRange(4000, 6000);
+    int cycleDuration = cycleDuractionRange(eng); // duration of a single simulation cycle in ms
     std::chrono::time_point<std::chrono::system_clock> lastUpdate = std::chrono::system_clock::now();
 
     while (true) {
