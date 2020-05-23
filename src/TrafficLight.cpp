@@ -14,8 +14,8 @@ T MessageQueue<T>::receive() {
     _condition.wait(lock, [this] { return !_queue.empty(); }); // pass unique lock to condition variable
 
     // remove first vector element from queue
-    T message = std::move(_queue.back());
-    _queue.pop_back();
+    T message = std::move(_queue.front());
+    _queue.pop_front();
 
     return message; 
 }
